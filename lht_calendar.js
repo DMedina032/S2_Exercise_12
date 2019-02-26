@@ -40,6 +40,7 @@ document.getElementById("calendar").innerHTML = createCalendar(thisDay);
 function createCalendar(calDate) {
       var calendarHTML = "<table id='calendar_table'>";
       calendarHTML += calCaption(calDate);
+      calendarHTML += calWeekdayRow();
       calendarHTML += "</table>";
       return calendarHTML;
 }
@@ -57,4 +58,35 @@ function calCaption(calDate) {
 
       // Write the caption
       return "<caption>" + monthName[thisMonth] + " " + thisYear + "</caption>";
+}
+
+//function to write a table row of weekday abreveations
+function calWeekdayRow() {
+      // an array of weelday abreveations
+      var dayName = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+      var rowHTML = "<tr>";
+
+      //look through the daay name array
+      for (var i = 0; i < dayName.length; i++) {
+            rowHTML += "<th class='calendar_weekDays'>" + dayName[i] + "</th>";
+      }
+      rowHTML += "</tr>";
+      return rowHTML;
+}
+
+// create a function to calculate the number of days in the month
+function daysInMonth(calDate) {
+      // array of days in each month
+      var dayCount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      // extract the four diget year and month value
+      var thisYear = calDate.getFullYear();
+      var thisMonth = calDate.getMonth();
+
+      // revise the days in february for leap years
+      if (thisYear / 4 == 0) {
+            dayCount[1] = 29;
+      }
+
+      // return the number of days ofr the current month
+      return dayCount[thisMonth];
 }
